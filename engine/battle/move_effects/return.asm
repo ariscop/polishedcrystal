@@ -13,11 +13,11 @@ BattleCommand_happinesspower:
 	ldh [hMultiplicand + 2], a
 	ld a, 10
 	ldh [hMultiplier], a
-	farcall Multiply
+	call Multiply
 	ld a, 25
 	ldh [hDivisor], a
 	ld b, 4
-	farcall Divide
+	call Divide
 	ldh a, [hQuotient + 2]
 	ld d, a
 	pop bc

@@ -321,7 +321,7 @@ BattleCommand_checkturn:
 	jr z, .thaw
 
 	; Check for defrosting
-	farcall BattleRandom
+	call BattleRandom
 	cp 1 + (20 percent)
 	jr c, .thaw
 	ld hl, FrozenSolidText
@@ -367,7 +367,7 @@ BattleCommand_checkturn:
 	call FarPlayBattleAnimation
 
 	; 33% chance of hitting itself (updated from 50% in Gen VII)
-	farcall BattleRandom
+	call BattleRandom
 	cp 1 + (33 percent)
 	jr nc, .not_confused
 
@@ -396,7 +396,7 @@ BattleCommand_checkturn:
 	call FarPlayBattleAnimation
 
 	; 50% chance of infatuation
-	farcall BattleRandom
+	call BattleRandom
 	cp 1 + (50 percent)
 	jr c, .not_infatuated
 
@@ -437,7 +437,7 @@ BattleCommand_checkturn:
 	ret z
 
 	; 25% chance to be fully paralyzed
-	farcall BattleRandom
+	call BattleRandom
 	cp 1 + (25 percent)
 	ret nc
 
@@ -761,7 +761,7 @@ BattleCommand_checkobedience:
 
 ; Random number from 0 to obedience level + monster level
 .rand1
-	farcall BattleRandom
+	call BattleRandom
 	swap a
 	cp b
 	jr nc, .rand1
@@ -778,7 +778,7 @@ BattleCommand_checkobedience:
 
 ; Another random number from 0 to obedience level + monster level
 .rand2
-	farcall BattleRandom
+	call BattleRandom
 	cp b
 	jr nc, .rand2
 
@@ -794,7 +794,7 @@ BattleCommand_checkobedience:
 	ld b, a
 
 ; The chance of napping is the difference out of 256.
-	farcall BattleRandom
+	call BattleRandom
 	swap a
 	sub b
 	jr c, .Nap
@@ -809,7 +809,7 @@ BattleCommand_checkobedience:
 	jmp .EndDisobedience
 
 .Nap:
-	farcall BattleRandom
+	call BattleRandom
 	add a
 	swap a
 	and SLP_MASK
@@ -821,7 +821,7 @@ BattleCommand_checkobedience:
 	jr .Print
 
 .DoNothing:
-	farcall BattleRandom
+	call BattleRandom
 	and %11
 
 	ld hl, LoafingAroundText
@@ -899,7 +899,7 @@ BattleCommand_checkobedience:
 	push af
 
 .RandomMove:
-	farcall BattleRandom
+	call BattleRandom
 	and %11 ; NUM_MOVES - 1
 
 	cp b
@@ -1173,7 +1173,7 @@ BattleCommand_critical:
 	ld hl, CriticalHitChances
 	ld b, 0
 	add hl, bc
-	farcall BattleRandom
+	call BattleRandom
 	cp [hl]
 	ret nc
 .guranteed_crit
@@ -1374,7 +1374,7 @@ BattleCommand_stab:
 	ldh [hMultiplicand + 1], a
 	ld a, [hld]
 	ldh [hMultiplicand + 2], a
-	farcall Multiply
+	call Multiply
 
 	; Parental Bond
 	ld a, BATTLE_VARS_SUBSTATUS2
@@ -1404,7 +1404,7 @@ BattleCommand_stab:
 	ld a, $10
 	ldh [hDivisor], a
 	ld b, 4
-	farcall Divide
+	call Divide
 
 	; Store in curDamage
 	ldh a, [hMultiplicand]
@@ -1746,16 +1746,16 @@ endc
 
 	; Multiply by 85-100%...
 	ld a, 16
-	farcall BattleRandomRange
+	call BattleRandomRange
 	add 85
 	ldh [hMultiplier], a
-	farcall Multiply
+	call Multiply
 
 	; ...divide by 100%...
 	ld a, 100
 	ldh [hDivisor], a
 	ld b, $4
-	farcall Divide
+	call Divide
 
 	; ...to get .85-1.00x damage.
 	ldh a, [hQuotient + 1]
@@ -1937,7 +1937,7 @@ BattleCommand_checkhit:
 	ldh a, [hMultiplicand + 2]
 	ld b, a
 	ld a, 100
-	farcall BattleRandomRange
+	call BattleRandomRange
 	cp b
 	ret c
 	ld a, ATKFAIL_ACCMISS
@@ -2207,7 +2207,7 @@ _CheckEffectChance:
 
 .skip_serene_grace
 	ld a, 100
-	farcall BattleRandomRange
+	call BattleRandomRange
 	cp b
 	jr c, EffectChanceEnd
 	; fallthrough
@@ -2467,7 +2467,7 @@ BattleCommand_applydamage:
 	jr nz, .no_endure
 	jr .enduring
 .focus_band
-	farcall BattleRandom
+	call BattleRandom
 	cp c
 	jr nc, .no_endure
 .enduring
@@ -2726,7 +2726,7 @@ BattleCommand_startloop:
 	ld a, b
 	cp HELD_LOADED_DICE
 	jr nz, .not_loaded_dice
-	farcall BattleRandom
+	call BattleRandom
 	and 1
 	add 4
 	jr .got_count
@@ -2735,7 +2735,7 @@ BattleCommand_startloop:
 	; Hit 2-5 times with 2 and 3 being twice as common.
 	; So randomize a number 0-5, take (result mod 4) + 2.
 	ld a, 6
-	farcall BattleRandomRange
+	call BattleRandomRange
 	cp 4
 	jr c, .random_ok
 	sub 4
@@ -3187,7 +3187,7 @@ BattleCommand_posthiteffects:
 .no_serene_grace
 	; Flinch items procs even after Rocky Helmet fainting
 	ld a, 100
-	farcall BattleRandomRange
+	call BattleRandomRange
 	cp c
 	call c, FlinchTarget
 	ret
@@ -3485,7 +3485,7 @@ EndMoveDamageChecks:
 	ld a, 10
 	ldh [hDivisor], a
 	ld b, 2
-	farcall Divide
+	call Divide
 	ldh a, [hQuotient + 1]
 	ld b, a
 	ldh a, [hQuotient + 2]
@@ -4173,7 +4173,7 @@ DamagePass1:
 	ld [hld], a
 	push bc
 	ld b, $4
-	farcall Divide
+	call Divide
 	pop bc
 
 	; + 2
@@ -4185,23 +4185,23 @@ DamagePass2:
 	; * bp
 	ld hl, hMultiplier
 	ld [hl], d
-	farcall Multiply
+	call Multiply
 
 	; * Attack
 	ld [hl], b
-	farjp Multiply
+	jmp Multiply
 
 DamagePass3:
 	; / Defense
 	ld hl, hMultiplier
 	ld [hl], c
 	ld b, $4
-	farcall Divide
+	call Divide
 
 	; / 50
 	ld [hl], 50
 	ld b, $4
-	farjp Divide
+	jmp Divide
 
 DamagePass4:
 	; Add 2 unless damage is at least $ff00 -- set wCurDamage to $ff** in that case.
@@ -4301,7 +4301,7 @@ BattleCommand_constantdamage:
 	ldh [hMultiplicand + 2], a
 	ld a, $30
 	ldh [hMultiplier], a
-	farcall Multiply
+	call Multiply
 	ld a, [hli]
 	ld b, a
 	ld a, [hl]
@@ -4329,7 +4329,7 @@ BattleCommand_constantdamage:
 
 .skip_to_divide
 	ld b, $4
-	farcall Divide
+	call Divide
 	ldh a, [hQuotient + 2]
 	ld b, a
 	ld hl, ReversalPower
@@ -4613,7 +4613,7 @@ BattleCommand_sleep:
 	; 1-3 turns of sleep, rnd(0-2) + 2 since Pokémon wake up once it ticks to 0.
 	push hl
 	ld a, 3
-	farcall BattleRandomRange
+	call BattleRandomRange
 	add 2
 	pop hl
 	ld [hl], a
@@ -4909,10 +4909,10 @@ HandleBigRoot:
 	ld [hl], c
 	ld hl, hMultiplier
 	ld [hl], 13
-	farcall Multiply
+	call Multiply
 	ld [hl], 10
 	ld b, 4
-	farcall Divide
+	call Divide
 	ldh a, [hQuotient + 1]
 	ld b, a
 	ldh a, [hQuotient + 2]
@@ -5300,7 +5300,7 @@ BattleCommand_rampage:
 	jr nz, .already_rampaging
 	set SUBSTATUS_RAMPAGE, [hl]
 ; Rampage for 1 or 2 more turns
-	farcall BattleRandom
+	call BattleRandom
 	and %00000001
 	inc a
 	ld [de], a
@@ -5333,7 +5333,7 @@ HandleRampage_ConfuseUser:
 
 	set SUBSTATUS_CONFUSED, [hl]
 	inc de ; ConfuseCount
-	farcall BattleRandom
+	call BattleRandom
 	and %11
 	inc a
 	inc a
@@ -5677,7 +5677,7 @@ BattleCommand_traptarget:
 	pop de
 	pop bc
 	jr z, .seven_turns
-	farcall BattleRandom
+	call BattleRandom
 	and 1
 	add 4
 	jr .got_count
@@ -5762,7 +5762,7 @@ BattleCommand_recoil:
 	ld a, 3
 	ldh [hDivisor], a
 	ld b, 2
-	farcall Divide
+	call Divide
 	ldh a, [hQuotient + 2]
 	ld c, a
 	ldh a, [hQuotient + 1]
@@ -5837,7 +5837,7 @@ FinishConfusingTarget:
 
 .got_confuse_count
 	set SUBSTATUS_CONFUSED, [hl]
-	farcall BattleRandom
+	call BattleRandom
 	and %11
 	inc a
 	inc a

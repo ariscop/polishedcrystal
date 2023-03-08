@@ -36,12 +36,12 @@ BattleCommand_gyroball:
 	ldh [hMultiplicand + 2], a
 	ld a, 25
 	ldh [hMultiplier], a
-	farcall Multiply
+	call Multiply
 
 	ld a, c
 	ldh [hDivisor], a
 	ld b, 4
-	farcall Divide
+	call Divide
 
 	; Cap at min 1, max 150
 	ld hl, hMultiplicand

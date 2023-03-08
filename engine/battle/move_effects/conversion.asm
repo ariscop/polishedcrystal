@@ -159,7 +159,7 @@ BattleCommand_conversion:
 	jr .validate_choice
 .not_smart
 .enemy_wild
-	farcall BattleRandom
+	call BattleRandom
 	and %11 ; NUM_MOVES - 1
 .validate_choice
 	pop de

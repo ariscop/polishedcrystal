@@ -292,7 +292,7 @@ BuySell_MultiplyPrice:
 	ld a, [wItemQuantityChangeBuffer]
 	ldh [hMultiplier], a
 	push hl
-	farcall Multiply
+	call Multiply
 	pop hl
 	ret
 

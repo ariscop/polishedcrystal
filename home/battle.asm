@@ -718,7 +718,7 @@ CheckMoveSpeed::
 
 .quick_claw
 	ld a, 100
-	farcall BattleRandomRange
+	call BattleRandomRange
 	cp c
 	pop de
 	ret nc
@@ -783,7 +783,7 @@ _CheckSpeed::
 	jr z, .secondary_player
 	inc b
 .secondary_player
-	farcall BattleRandom
+	call BattleRandom
 	and $1
 	xor b
 	scf

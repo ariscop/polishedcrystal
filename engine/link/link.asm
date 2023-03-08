@@ -2576,7 +2576,7 @@ DetermineLinkBattleResult:
 	rra
 	ldh [hDivisor], a
 	ld b, $4
-	farcall Divide
+	call Divide
 	ldh a, [hQuotient + 2]
 	add e
 	ld e, a

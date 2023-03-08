@@ -194,11 +194,6 @@ SECTION "Battle Endturn", ROMX
 INCLUDE "engine/battle/endturn.asm"
 
 
-SECTION "Math", ROMX
-
-INCLUDE "engine/math/math.asm"
-
-
 SECTION "Pokedex", ROMX
 
 INCLUDE "engine/pokedex/area.asm"
@@ -468,11 +463,6 @@ INCLUDE "engine/battle_anims/bg_effects.asm"
 SECTION "Battle Animation Data", ROMX
 
 INCLUDE "data/moves/animations.asm"
-
-
-SECTION "Sine", ROMX
-
-INCLUDE "engine/math/sine.asm"
 
 
 SECTION "Move Animations", ROMX

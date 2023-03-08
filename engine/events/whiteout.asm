@@ -95,7 +95,7 @@ LoseMoney:
 	ldh [hMultiplicand + 1], a
 	ld a, b
 	ldh [hMultiplicand + 2], a
-	farcall Multiply
+	call Multiply
 	ld de, hMoneyTemp
 	ld hl, hProduct + 1
 	call .copy

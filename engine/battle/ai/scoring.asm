@@ -65,7 +65,7 @@ INCLUDE "data/battle/ai/status_only_effects.asm"
 AI_Conversion:
 ; not a layer, called by Conversion to allow the AI to select a good move type
 ; TODO: implement
-	farcall BattleRandom
+	call BattleRandom
 	and %11
 	ret
 

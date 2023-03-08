@@ -461,7 +461,7 @@ ForewarnAbility:
 	inc a ; no-optimize inefficient WRAM increment/decrement
 	ld [wBuffer2], a
 	inc a
-	farcall BattleRandomRange
+	call BattleRandomRange
 	and a
 	jr z, .loop
 .replace
@@ -701,7 +701,7 @@ CursedBodyAbility:
 	call SwitchTurn
 	ret nc
 	ld a, 10
-	farcall BattleRandomRange
+	call BattleRandomRange
 	cp 3
 	ret nc
 	call DisableAnimations
@@ -740,7 +740,7 @@ CuteCharmAbility:
 
 	; Only works 30% of the time.
 	ld a, 10
-	farcall BattleRandomRange
+	call BattleRandomRange
 	cp 3
 	ret nc
 
@@ -795,7 +795,7 @@ EffectSporeAbility:
 	ld a, b
 	cp HELD_SAFETY_GOGGLES
 	ret z
-	farcall BattleRandom
+	call BattleRandom
 	cp 1 + 33 percent
 	jr c, PoisonPointAbility
 	cp 1 + 66 percent
@@ -830,7 +830,7 @@ AfflictStatusAbility:
 _AfflictStatusAbility:
 	; Only works 30% of the time.
 	ld a, 10
-	farcall BattleRandomRange
+	call BattleRandomRange
 	cp 3
 	ret nc
 
@@ -1328,7 +1328,7 @@ HarvestAbility:
 	call GetWeatherAfterUserUmbrella
 	cp WEATHER_SUN
 	jr z, .ok
-	farcall BattleRandom
+	call BattleRandom
 	and 1
 	ret z
 
@@ -1519,7 +1519,7 @@ SelectRandomStat:
 ; Randomizes values until we get one matching a nonmaxed stat
 .loop1
 	ld a, 5 ; don't raise acc/eva, only 0-4 (atk/def/spe/sat/sdf)
-	farcall BattleRandomRange
+	call BattleRandomRange
 	lb de, 1, 0 ; e = counter
 .loop2
 	cp e
@@ -1889,7 +1889,7 @@ HydrationAbility:
 	jr HealAllStatusAbility
 ShedSkinAbility:
 ; Cure a non-volatile status 30% of the time
-	farcall BattleRandom
+	call BattleRandom
 	cp 1 + (30 percent)
 	ret nc
 	; fallthrough
@@ -2058,7 +2058,7 @@ RunPostBattleAbilities::
 
 	; Get a random value between 1-20.
 	ld a, 20
-	farcall BattleRandomRange
+	call BattleRandomRange
 	inc a ; BattleRandomRange returns 0-19.
 	ld c, a
 
@@ -2079,7 +2079,7 @@ RunPostBattleAbilities::
 
 .Pickup:
 	ld a, 10
-	farcall BattleRandomRange
+	call BattleRandomRange
 	and a
 	ret nz
 

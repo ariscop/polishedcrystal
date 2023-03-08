@@ -141,11 +141,11 @@ HPBarAnim_UpdateVariables:
 	ldh [hMultiplicand + 1], a
 	ld a, [wCurHPAnimMaxHP]
 	ldh [hMultiplicand + 2], a
-	farcall Multiply
+	call Multiply
 	ld a, HP_BAR_LENGTH_PX * 2
 	ldh [hDivisor], a
 	ld b, 4
-	farcall Divide
+	call Divide
 	ldh a, [hQuotient + 1]
 	ld [wCurHPAnimOldHP + 1], a
 	ldh a, [hQuotient + 2]

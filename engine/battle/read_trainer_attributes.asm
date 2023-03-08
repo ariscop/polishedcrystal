@@ -57,7 +57,7 @@ ComputeTrainerReward:
 	ld [hli], a
 	ld a, [wCurPartyLevel]
 	ld [hl], a
-	farcall Multiply
+	call Multiply
 	ld hl, wBattleReward
 	xor a
 	ld [hli], a

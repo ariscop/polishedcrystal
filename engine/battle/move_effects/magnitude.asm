@@ -1,6 +1,6 @@
 BattleCommand_getmagnitude:
 	push bc
-	farcall BattleRandom
+	call BattleRandom
 	ld b, a
 	ld hl, MagnitudePower
 .loop

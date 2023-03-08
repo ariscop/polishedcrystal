@@ -116,7 +116,7 @@ UpdateCelebiPosition:
 	add hl, bc
 	ld a, [hl]
 	inc [hl]
-	farcall Cosine
+	call Cosine
 	ld hl, SPRITEANIMSTRUCT_XOFFSET
 	add hl, bc
 	ld [hl], a

@@ -40,7 +40,7 @@ ProtectChance:
 .done
 
 .rand
-	farcall BattleRandom
+	call BattleRandom
 	and a
 	jr z, .rand
 

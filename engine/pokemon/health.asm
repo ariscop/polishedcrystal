@@ -100,7 +100,7 @@ ComputeHPBarPixels:
 	ldh [hMultiplicand + 2], a
 	ld a, 6 * 8
 	ldh [hMultiplier], a
-	farcall Multiply
+	call Multiply
 	; We need de to be under 256 because hDivisor is only 1 byte.
 	ld a, d
 	and a
@@ -127,7 +127,7 @@ ComputeHPBarPixels:
 	ld a, e
 	ldh [hDivisor], a
 	ld b, 4
-	farcall Divide
+	call Divide
 	ldh a, [hQuotient + 2]
 	ld e, a
 	pop hl

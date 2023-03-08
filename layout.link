@@ -83,7 +83,6 @@ ROMX $0E
 
 ROMX $0F
 	"Battle Core"
-	"Math"
 
 ROMX $10
 	"Pokedex"
@@ -116,7 +115,6 @@ ROMX $22
 
 ROMX $23
 	"bank23"
-	"Sine"
 
 ROMX $24
 	"bank24"

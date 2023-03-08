@@ -554,7 +554,7 @@ CalcBTimesCOver256:
 	ldh [hMultiplicand + 2], a
 	ld a, c
 	ldh [hMultiplier], a
-	farcall Multiply
+	call Multiply
 	ldh a, [hProduct + 2]
 	ret
 
